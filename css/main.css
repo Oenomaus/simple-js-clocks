@@ -1,0 +1,14 @@
+.clock.analog {
+
+}
+
+.clock.digital {
+    border: solid 2px black;
+    display: inline-block !important;
+    /*width: 350px;*/
+    margin-top: 150px;
+}
+
+#hours {
+    margin-left: 10px;
+}

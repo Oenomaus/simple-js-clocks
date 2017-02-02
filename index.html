@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Zegar</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+
+  <body>
+    <div id="settingsModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Settings</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div id="analogSettings" class="col-md-6">
+                <h2>Analog Settings</h2>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="showAnalogCheck"> Show Analog Clock
+                  </label>
+                </div>
+              </div>
+              <div id="digitalSettings" class="col-md-6">
+                <h2>Digital Settings</h2>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="showDigitalCheck"> Show Digital Clock
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="dig24hClockCheck"> 24H clock
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="digShowMinutesCheck"> Show Minutes
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="digShowSecondsCheck"> Show Seconds
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="digShowMilliCheck"> Show Milliseconds
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label for="refInt">Refresh interval:</label>
+                  <input type="text" class="form-control" id="refreshInterval">
+                </div>
+                <div class="form-group">
+                  <label for="tz">Timezone:</label>
+                  <select class="form-control" id="timezone"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="closeSettingsButton" data-dismiss="modal">Apply</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+    <div class="container">
+      <div class="row">
+        <!--Clock-->
+        <div class="col-md-8">
+          <canvas id="analogClock" class="CoolClock:classic:190 clock analog"></canvas>
+          <div id="digitalClock" class="clock digital panel panel-default">
+            <h1>
+              <span id="hours"></span>
+              <span id="minutes"></span>
+              <span id="seconds"></span>
+              <span id="milliseconds"></span>
+              <span id="hourType"></span>
+            </h1>
+          </div>
+        </div>
+        <!--Settings-->
+        <div class="col-md-4">
+          <button type="button" id="settingsButton" class="btn btn-info">Settings</button>
+        </div>
+      </div>
+      <div id="date">
+        <h1>
+          Date: <span id="dateYear"></span> 
+          - <span id="dateMonth"></span> 
+          - <span id="dateDay"></span> 
+          - <span id="dateDayName"></span> 
+        </h1>
+      </div>
+    </div>
+
+    <script src="js/coolclock.js"></script>
+    <script src="js/coolclock-skins.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/moment-timezone.js"></script>
+    <script src="js/bootstrap-native.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+
+</html>
