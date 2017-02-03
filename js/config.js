@@ -12,5 +12,5 @@ var config = {
     "analogDisplayHoursMarks": true,
     "analogDisplaySecondsMarks": true,
     "romanize": true,
-    "timezone": "Europe/Warsaw"
+    "timezone": "Europe/Warsaw",
 };
