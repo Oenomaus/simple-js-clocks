@@ -23,6 +23,36 @@
                     <input type="checkbox" id="showAnalogCheck"> Show Analog Clock
                   </label>
                 </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="anShowHoursIndiCheck"> Show Hours Indicator
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="anShowMinutesIndiCheck"> Show Minutes Indicator
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="anShowSecondsIndiCheck"> Show Seconds Indicator
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="anShowHoursMarksCheck"> Show Hours Marks
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="anShowSecondsMarksCheck"> Show Minutes/Seconds Marks
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="romanNumeralsCheck"> Use Roman Numerals
+                  </label>
+                </div>
               </div>
               <div id="digitalSettings" class="col-md-6">
                 <h2>Digital Settings</h2>
@@ -51,15 +81,15 @@
                     <input type="checkbox" id="digShowMilliCheck"> Show Milliseconds
                   </label>
                 </div>
-                <div class="form-group">
+              </div>
+              <div class="form-group fullWidth">
                   <label for="refInt">Refresh interval:</label>
                   <input type="text" class="form-control" id="refreshInterval">
                 </div>
-                <div class="form-group">
+                <div class="form-group fullWidth">
                   <label for="tz">Timezone:</label>
                   <select class="form-control" id="timezone"></select>
                 </div>
-              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -73,7 +103,7 @@
       <div class="row">
         <!--Clock-->
         <div class="col-md-8">
-          <canvas id="analogClock" class="CoolClock:classic:190 clock analog"></canvas>
+          <div id="analogClock" class="clock analog"></div>
           <div id="digitalClock" class="clock digital panel panel-default">
             <h1>
               <span id="hours"></span>
@@ -87,23 +117,24 @@
         <!--Settings-->
         <div class="col-md-4">
           <button type="button" id="settingsButton" class="btn btn-info">Settings</button>
+          <div id="date">
+            <h1>
+              <span id="dateYear"></span> 
+              - <span id="dateMonth"></span> 
+              - <span id="dateDay"></span> 
+               <span id="dateDayName"></span> 
+            </h1>
+          </div>
         </div>
-      </div>
-      <div id="date">
-        <h1>
-          Date: <span id="dateYear"></span> 
-          - <span id="dateMonth"></span> 
-          - <span id="dateDay"></span> 
-          - <span id="dateDayName"></span> 
-        </h1>
       </div>
     </div>
 
-    <script src="js/coolclock.js"></script>
-    <script src="js/coolclock-skins.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/moment-timezone.js"></script>
     <script src="js/bootstrap-native.min.js"></script>
+    <script src="js/d3.v4.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/analogClock.js"></script>
     <script src="js/main.js"></script>
   </body>
 

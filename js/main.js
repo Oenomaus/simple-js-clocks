@@ -1,77 +1,80 @@
-var config = {
-    "refreshInterval": 1000,
-    "showAnalog": true,
-    "showDigital": true,
-    "24hour": false,
-    "displayMinutes": true,
-    "displaySeconds": true,
-    "displayMilliseconds": false,
-    "timezone": "Europe/Warsaw"
-};
-
 (function() {
-    var analogEl = document.getElementById("analogClock");
-    var digitalEl = document.getElementById("digitalClock");
-    var settingsModalEl = document.getElementById("settingsModal");
-    var settingsButtonEl = document.getElementById("settingsButton");
-    var closeSettingsButtonEl = document.getElementById("closeSettingsButton");
+    var analogEl = d3.select("#analogClock");
+    var digitalEl = d3.select("#digitalClock");
+    var settingsModalEl = d3.select("#settingsModal");
+    var settingsButtonEl = d3.select("#settingsButton");
+    var closeSettingsButtonEl = d3.select("#closeSettingsButton");
 
-    var showAnalogCheckEl = document.getElementById("showAnalogCheck");
-    var showDigitalCheckEl = document.getElementById("showDigitalCheck");
-    var dig24hClockCheckEl = document.getElementById("dig24hClockCheck");
-    var digShowMinutesCheckEl = document.getElementById("digShowMinutesCheck");
-    var digShowSecondsCheckEl = document.getElementById("digShowSecondsCheck");
-    var digShowMilliCheckEl = document.getElementById("digShowMilliCheck");
-    var refreshIntervalEl = document.getElementById("refreshInterval");
-    var timezoneEl = document.getElementById("timezone");
+    var showAnalogCheckEl = d3.select("#showAnalogCheck");
+    var showDigitalCheckEl = d3.select("#showDigitalCheck");
+    var dig24hClockCheckEl = d3.select("#dig24hClockCheck");
+    var digShowMinutesCheckEl = d3.select("#digShowMinutesCheck");
+    var digShowSecondsCheckEl = d3.select("#digShowSecondsCheck");
+    var digShowMilliCheckEl = d3.select("#digShowMilliCheck");
+    var anShowHoursIndiCheckEl = d3.select("#anShowHoursIndiCheck");
+    var anShowMinutesIndiCheckEl = d3.select("#anShowMinutesIndiCheck");
+    var anShowSecondsIndiCheckEl = d3.select("#anShowSecondsIndiCheck");
+    var anShowHoursMarksCheckEl = d3.select("#anShowHoursMarksCheck");
+    var anShowSecondsMarksCheckEl = d3.select("#anShowSecondsMarksCheck");
+    var romanNumeralsCheckEl = d3.select("#romanNumeralsCheck");
 
-    var hoursEl = document.getElementById("hours");
-    var minutesEl = document.getElementById("minutes");
-    var secondsEl = document.getElementById("seconds");
-    var millisecondsEl = document.getElementById("milliseconds");
-    var hourTypeEl = document.getElementById("hourType");
+    var refreshIntervalEl = d3.select("#refreshInterval");
+    var timezoneEl = d3.select("#timezone");
 
-    var yearEl = document.getElementById("dateYear");
-    var monthEl = document.getElementById("dateMonth");
-    var dayEl = document.getElementById("dateDay");
-    var dayNameEl = document.getElementById("dateDayName");
+    var hoursEl = d3.select("#hours");
+    var minutesEl = d3.select("#minutes");
+    var secondsEl = d3.select("#seconds");
+    var millisecondsEl = d3.select("#milliseconds");
+    var hourTypeEl = d3.select("#hourType");
 
-    CoolClock.findAndCreateClocks();
+    var yearEl = d3.select("#dateYear");
+    var monthEl = d3.select("#dateMonth");
+    var dayEl = d3.select("#dateDay");
+    var dayNameEl = d3.select("#dateDayName");
 
     var changeHours = function(hours) {
-        hoursEl.textContent = (hours === "" ? "" : hours);
+        var text = (hours === "" ? "" : hours);
+        hoursEl.text(text);
     };
 
     var changeMinutes = function(minutes) {
-        minutesEl.textContent = (minutes === "" ? "" : ": " + minutes);
+        var text = (minutes === "" ? "" : ": " + minutes);
+        minutesEl.text(text);
     };
 
     var changeSeconds = function(seconds) {
-        secondsEl.textContent = (seconds === "" ? "" : ": " + seconds);
+        var text = (seconds === "" ? "" : ": " + seconds);
+        secondsEl.text(text);
     };
 
     var changeMilliseconds = function(milliseconds) {
-        millisecondsEl.textContent = (milliseconds === "" ? "" : ": " + milliseconds);
+        var text = (milliseconds === "" ? "" : ": " + milliseconds);
+        millisecondsEl.text(text);
     };
 
     var changeHourType = function(type) {
-        hourTypeEl.textContent = type;
+        var text = type;
+        hourTypeEl.text(text);
     };
 
     var changeYear = function(year) {
-        yearEl.textContent = year;
+        var text = year;
+        yearEl.text(text);
     };
 
     var changeMonth = function(month) {
-        monthEl.textContent = month;
+        var text = month;
+        monthEl.text(text);
     };
 
     var changeDay = function(day) {
-        dayEl.textContent = day;
+        var text = day;
+        dayEl.text(text);
     };
 
     var changeDayName = function(dayName) {
-        dayNameEl.textContent = dayName;
+        var text = dayName;
+        dayNameEl.text(text);
     };
 
     var changeTime = function() {
@@ -82,7 +85,7 @@ var config = {
         var seconds = config.displaySeconds ? currTime.format("ss") : "";
         var milliseconds = config.displayMilliseconds ? currTime.format("SSS") : "";
         var year = currTime.format("YYYY");
-        var month = currTime.format("MM");
+        var month = currTime.format("MMM");
         var day = currTime.format("DD");
         var dayName = currTime.format("dddd");
 
@@ -103,27 +106,34 @@ var config = {
     };
 
     var updateView = function() {
-        config.showAnalog ? (analogEl.style.display = "block") : (analogEl.style.display = "none"); 
-        config.showDigital ? (digitalEl.style.setProperty("display", "inline-block", "important")) : (digitalEl.style.setProperty("display", "none", "important"));
+        analogEl.style("display", (config.showAnalog ? "block" : "none"));
+        digitalEl.style("display", (config.showDigital ? "inline-block" : "none"), "important");
+        redrawClock();
     };
 
-    settingsButtonEl.onclick = function() {
-        (new Modal(settingsModalEl)).show();
-    };
+    settingsButtonEl.on("click", function() {
+        (new Modal(settingsModalEl.node())).show();
+    });
 
-    closeSettingsButtonEl.onclick = function() {
-        config.showAnalog = showAnalogCheckEl.checked;
-        config.showDigital = showDigitalCheckEl.checked;
-        config["24hour"] = dig24hClockCheckEl.checked;
-        config.displayMinutes = digShowMinutesCheckEl.checked;
-        config.displaySeconds = digShowSecondsCheckEl.checked;
-        config.displayMilliseconds = digShowMilliCheckEl.checked;
-        config.refreshInterval = refreshIntervalEl.value ? parseInt(refreshIntervalEl.value) : 100;
-        config.timezone = timezoneEl.value;
+    closeSettingsButtonEl.on("click", function() {
+        config.showAnalog = showAnalogCheckEl.property("checked");
+        config.showDigital = showDigitalCheckEl.property("checked");
+        config["24hour"] = dig24hClockCheckEl.property("checked");
+        config.displayMinutes = digShowMinutesCheckEl.property("checked");
+        config.displaySeconds = digShowSecondsCheckEl.property("checked");
+        config.displayMilliseconds = digShowMilliCheckEl.property("checked");
+        config.analogDisplayHoursIndicator = anShowHoursIndiCheckEl.property("checked");
+        config.analogDisplayMinutesIndicator = anShowMinutesIndiCheckEl.property("checked");
+        config.analogDisplaySecondsIndicator = anShowSecondsIndiCheckEl.property("checked");
+        config.analogDisplayHoursMarks = anShowHoursMarksCheckEl.property("checked");
+        config.analogDisplaySecondsMarks = anShowSecondsMarksCheckEl.property("checked");
+        config.refreshInterval = refreshIntervalEl.property("value") ? parseInt(refreshIntervalEl.property("value")) : 100;
+        config.timezone = timezoneEl.property("value");
+        config.romanize = romanNumeralsCheckEl.property("checked");
 
         saveSettings();
         updateView();
-    };
+    });
 
     var loadSettings = function() {
         if(localStorage.getItem("config")) {
@@ -133,14 +143,20 @@ var config = {
             });
         }
 
-        showAnalogCheckEl.checked = config.showAnalog;
-        showDigitalCheckEl.checked = config.showDigital;
-        dig24hClockCheckEl.checked = config["24hour"];
-        digShowMinutesCheckEl.checked = config.displayMinutes;
-        digShowSecondsCheckEl.checked = config.displaySeconds;
-        digShowMilliCheckEl.checked = config.displayMilliseconds;
-        refreshIntervalEl.value = config.refreshInterval;
-        timezoneEl.value = config.timezone;
+        showAnalogCheckEl.property("checked", config.showAnalog);
+        showDigitalCheckEl.property("checked", config.showDigital);
+        dig24hClockCheckEl.property("checked", config["24hour"]);
+        digShowMinutesCheckEl.property("checked", config.displayMinutes);
+        digShowSecondsCheckEl.property("checked", config.displaySeconds);
+        digShowMilliCheckEl.property("checked", config.displayMilliseconds);
+        anShowHoursIndiCheckEl.property("checked", config.analogDisplayHoursIndicator);
+        anShowMinutesIndiCheckEl.property("checked", config.analogDisplayMinutesIndicator);
+        anShowSecondsIndiCheckEl.property("checked", config.analogDisplaySecondsIndicator);
+        anShowHoursMarksCheckEl.property("checked", config.analogDisplayHoursMarks);
+        anShowSecondsMarksCheckEl.property("checked", config.analogDisplaySecondsMarks);
+        refreshIntervalEl.property("value", config.refreshInterval);
+        timezoneEl.property("value", config.timezone);
+        romanNumeralsCheckEl.property("checked", config.romanize);
     };
 
     var saveSettings = function() {
@@ -153,13 +169,13 @@ var config = {
             var tzOption = "<option value='" + name + "'>" + name + "</option>";
             timezonesHtml += tzOption;
         });
-        timezoneEl.innerHTML = timezonesHtml;
+        timezoneEl.html(timezonesHtml);
     };
 
     loadTimezones();
     loadSettings();
     updateView();
-    
+
     setTimeout(function updateTime() {
         changeTime();
         setTimeout(updateTime, config.refreshInterval);

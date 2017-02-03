@@ -5,10 +5,68 @@
 .clock.digital {
     border: solid 2px black;
     display: inline-block !important;
-    /*width: 350px;*/
     margin-top: 150px;
 }
 
 #hours {
     margin-left: 10px;
+}
+
+#settingsButton {
+    margin-top: 20px;
+}
+
+svg {
+	stroke: #000;
+	font-family: Arial, sans-serif, "Lucida Grande", Helvetica, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue"; 
+}
+
+#rim {
+  fill: none;
+  stroke: #999;
+  stroke-width: 4px;
+}
+
+.second-hand {
+	stroke: #ff0000;
+	stroke-width: 3;
+}
+
+.minute-hand {
+	stroke-width: 8;
+	stroke-linecap: round;
+}
+
+.hour-hand {
+	stroke-width: 12;
+	stroke-linecap: round;
+}
+
+.hands-cover {
+	stroke-width: 3;
+	fill: #fff;
+}
+
+.second-tick {
+	stroke-width:3;
+	fill: #000;	
+}
+
+.hour-tick {
+	stroke-width: 8;
+}
+
+.second-label {
+	font-size: 8px;
+}
+
+.hour-label {
+	font-size: 24px;
+}
+
+.fullWidth {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 95%;
 }
